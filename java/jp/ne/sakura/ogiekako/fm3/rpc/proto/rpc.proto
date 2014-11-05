@@ -1,0 +1,85 @@
+option java_package = "jp.ne.sakura.ogiekako.fm.rpc.proto";
+option java_outer_classname = "Rpc";
+
+enum Player {
+    // The first player
+    HITHER = 1;
+    // The second player
+    YONDER = 2;
+}
+
+message Cell {
+    optional int32 row = 1;
+    optional int32 col = 2;
+}
+
+message Position {
+    // If not set, the position is in hand.
+    optional Cell cell = 1;
+    optional Player owner = 2;
+}
+
+message Piece {
+    enum Type {
+        NONE = 1;
+        FU = 2;
+        KYO = 3;
+        KEI = 4;
+        GIN = 5;
+        KIN = 6;
+        KAKU = 7;
+        HI = 8;
+        OU = 9;
+        TO = 10;
+        NARI_KYO = 11;
+        NARI_KEI = 12;
+        NARI_GIN = 13;
+        UMA = 14;
+        RYU = 15;
+    }
+    optional Type type = 1;
+}
+
+message PiecePosition {
+    optional Piece piece = 1;
+    optional Position position = 2;
+}
+
+message State {
+    repeated PiecePosition piece_position = 1;
+    optional Player turn = 2;
+    optional int32 height = 3;
+    optional int32 width = 4;
+}
+
+message Problem {
+    enum Rule {
+        HELP = 1;
+    }
+
+    optional State state = 1;
+    optional Rule rule = 2;
+    optional int64 limit = 3;
+}
+
+message Move {
+    message Source {
+        // If not set, the source is from hand.
+        optional Cell cell = 1;
+    }
+    message Destination {
+        optional Cell cell = 1;
+        optional Piece piece = 2;
+    }
+    optional Player mover = 1;
+    optional Source source = 2;
+    optional Destination destination = 3;
+}
+
+message Solution {
+    repeated Move move = 1;
+}
+
+message SolutionSet {
+    repeated Solution solution = 1;
+}
