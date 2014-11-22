@@ -1,190 +1,44 @@
-<html>
+<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <title>Board</title>
-  <style type="text/css">
-    <!--
-      table {
-        background-color: black;
-      }
-      tr {
-        text-align: center;
-      }
-      td {
-        background-color: white;
-        height: 26px;
-        width: 20px;
-        margin: 0 auto;
-      }
-      td:hover {
-        background-color: #ddd; /* light green */
-      }
-      .selected {
-        background-color: #999 !important;
-      }
-      .yonder { 
-        -webkit-transform: rotate(-180.0deg);  /* Safari 3.1+, Chrome */
-        transform: rotate(-180.0deg);  /* Standard */
-      }
-    -->
-  </style>
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="board.js"></script>
+  <link rel="stylesheet" type="text/css" href="board.css">
 </head>
 
 <body>
+<div>
+  Rule:
+  <select id="rule">
+    <option value="help">Help</option>
+    <option value="self">Self</option>
+  </select>
+  #<input type="text" id="numMove">
+</div>
 <table>
-	<tr><td id="C00" class="selected"></td><td id="C01"></td><td id="C02"></td><td id="C03"></td><td id="C04"></td><td id="C05"></td><td id="C06"></td><td id="C07"></td><td id="C08"></td></tr>
-	<tr><td id="C10"></td><td id="C11"></td><td id="C12"></td><td id="C13"></td><td id="C14"></td><td id="C15"></td><td id="C16"></td><td id="C17"></td><td id="C18"></td></tr>
-	<tr><td id="C20"></td><td id="C21"></td><td id="C22"></td><td id="C23"></td><td id="C24"></td><td id="C25"></td><td id="C26"></td><td id="C27"></td><td id="C28"></td></tr>
-	<tr><td id="C30"></td><td id="C31"></td><td id="C32"></td><td id="C33"></td><td id="C34"></td><td id="C35"></td><td id="C36"></td><td id="C37"></td><td id="C38"></td></tr>
-	<tr><td id="C40"></td><td id="C41"></td><td id="C42"></td><td id="C43"></td><td id="C44"></td><td id="C45"></td><td id="C46"></td><td id="C47"></td><td id="C48"></td></tr>
-	<tr><td id="C50"></td><td id="C51"></td><td id="C52"></td><td id="C53"></td><td id="C54"></td><td id="C55"></td><td id="C56"></td><td id="C57"></td><td id="C58"></td></tr>
-	<tr><td id="C60"></td><td id="C61"></td><td id="C62"></td><td id="C63"></td><td id="C64"></td><td id="C65"></td><td id="C66"></td><td id="C67"></td><td id="C68"></td></tr>
-	<tr><td id="C70"></td><td id="C71"></td><td id="C72"></td><td id="C73"></td><td id="C74"></td><td id="C75"></td><td id="C76"></td><td id="C77"></td><td id="C78"></td></tr>
-	<tr><td id="C80"></td><td id="C81"></td><td id="C82"></td><td id="C83"></td><td id="C84"></td><td id="C85"></td><td id="C86"></td><td id="C87"></td><td id="C88"></td></tr>
+  <tr><td id="C00"></td><td id="C01"></td><td id="C02"></td><td id="C03"></td><td id="C04"></td><td id="C05"></td><td id="C06"></td><td id="C07"></td><td id="C08"></td></tr>
+  <tr><td id="C10"></td><td id="C11"></td><td id="C12"></td><td id="C13"></td><td id="C14"></td><td id="C15"></td><td id="C16"></td><td id="C17"></td><td id="C18"></td></tr>
+  <tr><td id="C20"></td><td id="C21"></td><td id="C22"></td><td id="C23"></td><td id="C24"></td><td id="C25"></td><td id="C26"></td><td id="C27"></td><td id="C28"></td></tr>
+  <tr><td id="C30"></td><td id="C31"></td><td id="C32"></td><td id="C33"></td><td id="C34"></td><td id="C35"></td><td id="C36"></td><td id="C37"></td><td id="C38"></td></tr>
+  <tr><td id="C40"></td><td id="C41"></td><td id="C42"></td><td id="C43"></td><td id="C44"></td><td id="C45"></td><td id="C46"></td><td id="C47"></td><td id="C48"></td></tr>
+  <tr><td id="C50"></td><td id="C51"></td><td id="C52"></td><td id="C53"></td><td id="C54"></td><td id="C55"></td><td id="C56"></td><td id="C57"></td><td id="C58"></td></tr>
+  <tr><td id="C60"></td><td id="C61"></td><td id="C62"></td><td id="C63"></td><td id="C64"></td><td id="C65"></td><td id="C66"></td><td id="C67"></td><td id="C68"></td></tr>
+  <tr><td id="C70"></td><td id="C71"></td><td id="C72"></td><td id="C73"></td><td id="C74"></td><td id="C75"></td><td id="C76"></td><td id="C77"></td><td id="C78"></td></tr>
+  <tr><td id="C80"></td><td id="C81"></td><td id="C82"></td><td id="C83"></td><td id="C84"></td><td id="C85"></td><td id="C86"></td><td id="C87"></td><td id="C88"></td></tr>
 </table>
+<div id="hither">
+  <span id="H0"><span class="name"></span><span id="hN0"></span></span>
+  <span id="H1"><span class="name"></span><span id="hN1"></span></span>
+  <span id="H2"><span class="name"></span><span id="hN2"></span></span>
+  <span id="H3"><span class="name"></span><span id="hN3"></span></span>
+  <span id="H4"><span class="name"></span><span id="hN4"></span></span>
+  <span id="H5"><span class="name"></span><span id="hN5"></span></span>
+  <span id="H6"><span class="name"></span><span id="hN6"></span></span>
+</div>
 
-<form name="myform" action="board.html" method="GET">
-  <input type="hidden" name="q" value="a">
-  <a href="javascript: submit()">submit</a>
-</form>
+<a href="javascript:submit()">submit</a>
 
-<script type="text/javascript">
- submit = function() {
-  document.myform.q.value = "hoge";
-  document.myform.submit();
- }
-</script>
-
-<script type="text/javascript">
-  var x = 0;
-  var y = 0;
-
-  function hasClass(ele,cls) {
-    return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
-  }
-
-  function addClass(ele,cls) {
-    if (!hasClass(ele,cls)) ele.className = (ele.className + " "+cls).trim();
-  }
-
-  function removeClass(ele,cls) {
-    if (hasClass(ele,cls)) {
-      var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-      ele.className=ele.className.replace(reg,' ').trim();
-    }
-  }
-
-  moveTo = function(nx,ny) {
-    var oldName = "C" + x + y;
-    var oldCell = document.getElementById(oldName);
-    removeClass(oldCell, "selected");
-    var name = "C" + nx + ny;
-    var cell = document.getElementById(name);
-    addClass(cell, "selected");
-    x = nx;
-    y = ny;
-  }
-
-  moveWithKey = function(key) {
-    var dx = 0, dy = 0;
-    if (key == 37) {// left
-      dy -= 1;
-    } else if (key == 38) {// up
-      dx -= 1;
-    } else if (key == 39) {// right
-      dy += 1;
-    } else if (key == 40) {// down
-      dx += 1;
-    } else {
-      return;
-    }
-    var nx = x + dx;
-    var ny = y + dy;
-    if (nx < 0) nx = 0;
-    if (ny < 0) ny = 0;
-    if (nx >= 9) nx = 8;
-    if (ny >= 9) ny = 8;
-    moveTo(nx,ny);
-  }
-
-  getName = function(key) {
-    if (key == 75) { // K
-      return "歩";
-    }
-    else if (key == 74) { // J
-      return "香";
-    }
-    else if (key == 72) { // H
-      return "桂";
-    }
-    else if (key == 71) { // G
-      return "銀";
-    }
-    else if (key == 70) { // F
-      return "金";
-    }
-    else if (key == 68) { // D
-      return "角";
-    }
-    else if (key == 83) { // S
-      return "飛";
-    }
-    else if (key == 65) { // A
-      return "王";
-    }
-    else if (key == 73) { // I
-      return "と";
-    }
-    else if (key == 85) { // U
-      return "杏";
-    }
-    else if (key == 89) { // Y
-      return "圭";
-    }
-    else if (key == 84) { // T
-      return "全";
-    }
-    else if (key == 69) { // E
-      return "馬";
-    }
-    else if (key == 87) { // W
-      return "竜";
-    }
-    else if (key == 32) { // ' '
-      return "";
-    } else {
-      return "N/A";
-    }
-  }
-
-  document.onkeydown = function(e) {
-    var key = e.keyCode;
-    if (37 <= key && key <= 40) {
-      moveWithKey(key);
-    } else if (!(e.metaKey) && (key == 32 || 65 <= key && key <= 90)) { // ' ' or 'A' - 'Z'
-      var cell = document.getElementsByClassName("selected")[0];
-      var str = getName(key);
-      if (str == "N/A") return;
-      cell.innerHTML = str;
-      if (e.shiftKey) {
-        addClass(cell, "yonder");
-      } else {
-        removeClass(cell, "yonder");
-      }
-    }
-  }
-
-  var i,j;
-  for(i=0;i<9;i++) for(j=0;j<9;j++) {
-    (function(i,j) {
-      var name = "C" + i + j;
-      var cell = document.getElementById(name);
-      cell.onclick = function() {
-        moveTo(i,j);
-      }
-    })(i,j)
-  }
-</script>
 </body>
 </html>
 

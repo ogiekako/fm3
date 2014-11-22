@@ -1,0 +1,27 @@
+table {
+    background-color: black;
+}
+tr {
+    text-align: center;
+}
+td {
+  background-color: white;
+  height: 26px;
+  width: 20px;
+  margin: 0 auto;
+}
+td:hover {
+  background-color: #ddd;
+}
+span:hover {
+  background-color: #ddd;
+}
+.selected {
+  background-color: #999 !important;
+}
+.yonder {
+  -webkit-transform: rotate(-180.0deg);  /* Safari 3.1+, Chrome */
+}
+#numMove {
+  width: 6em;
+}
