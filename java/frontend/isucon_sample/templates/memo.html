@@ -1,0 +1,80 @@
+{{ define "memo" }}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <title>Isucon3</title>
+    <link rel="stylesheet" href="http://localhost/css/bootstrap.min.css">
+    <style>
+body {
+  padding-top: 60px;
+}
+    </style>
+    <link rel="stylesheet" href="http://localhost/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="http://localhost/">
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Isucon3</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="http://localhost/">Home</a></li>
+              {{ if .User }}
+              <li><a href="http://localhost/mypage">MyPage</a></li>
+              <li>
+                <form action="/signout" method="post">
+                  <input type="hidden" name="sid" value="{{ .Token }}">
+                  <input type="submit" value="SignOut">
+                </form>
+              </li>
+              {{ else }}
+              <li><a href="http://localhost/signin">SignIn</a></li>
+              {{ end }}
+            </ul>
+          </div> <!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Hello {{ if .User }}{{ .User.Username }}{{ end }}!</h2>
+
+      <p id="author">
+      {{ if .Memo.IsPrivate }}
+      Private
+      {{ else }}
+      Public
+      {{ end }}
+      Memo by {{ .Memo.Username }} ({{ .Memo.CreatedAt }})
+      </p>
+
+      <hr>
+      {{ if .Older }}
+      <a id="older" href="http://localhost/memo/{{ .Older.Id }}">&lt; older memo</a>
+      {{ end }}
+      |
+      {{ if .Newer }}
+      <a id="newer" href="http://localhost/memo/{{ .Newer.Id }}">newer memo &gt;</a>
+      {{ end }}
+
+      <hr>
+      <div id="content_html">
+        {{ gen_markdown .Memo.Content }}
+      </div>
+
+    </div> <!-- /container -->
+
+    <script type="text/javascript" src="http://localhost/js/jquery.min.js"></script>
+    <script type="text/javascript" src="http://localhost/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+{{ end }}

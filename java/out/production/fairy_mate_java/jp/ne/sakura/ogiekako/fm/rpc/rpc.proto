@@ -1,0 +1,84 @@
+option java_package = "jp.ne.sakura.ogiekako.fm.rpc";
+option java_outer_classname = "Rpc";
+//option java_generic_services = true;
+
+enum Player {
+    DONT_USE = 0;
+    // First player
+    HITHER = 1;
+    // Second player
+    YONDER = 2;
+}
+
+message Cell {
+    optional int32 row = 1;
+    optional int32 col = 2;
+}
+
+message Position {
+    optional bool on_board = 1;
+    optional int32 row = 2 [deprecated = true];
+    optional int32 col = 3 [deprecated = true];
+    optional Cell cell = 4;
+}
+
+message Piece {
+    enum Type {
+        DONT_USE = 0;
+        NONE = 1;
+        FU = 2;
+        KYO = 3;
+        KEI = 4;
+        GIN = 5;
+        KIN = 6;
+        KAKU = 7;
+        HI = 8;
+        OU = 9;
+        TO = 10;
+        NARI_KYO = 11;
+        NARI_KEI = 12;
+        NARI_GIN = 13;
+        UMA = 14;
+        RYU = 15;
+    }
+    optional Type type = 1;
+    optional Position position = 2;
+    optional Player owner = 3;
+}
+
+message Board {
+    repeated Piece piece = 1;
+    optional Player turn = 2;
+    optional int32 height = 3;
+    optional int32 width = 4;
+}
+
+message Problem {
+    enum Rule {
+        DONT_USE = 0;
+        HELP = 1;
+    }
+
+    optional Board board = 1;
+    optional Rule rule = 2;
+    optional int64 limit = 3;
+}
+
+message Move {
+    optional Piece source = 1;
+    optional Piece target = 2;
+}
+
+message MoveSequence {
+    repeated Move move = 1;
+}
+
+message Solution {
+    repeated MoveSequence moveSequence = 1;
+}
+
+// Nothing is generated since java_generic_service = false (which is deprecated since 2.4.0).
+// Just for clarification.
+service Solver {
+    rpc Solve (Problem) returns (Solution);
+}

@@ -1,0 +1,14 @@
+option java_package = "jp.ne.sakura.ogiekako.proto_tutorial";
+option java_outer_classname = "Arithmetic";
+
+message NumList {
+    repeated int32 num = 1;
+}
+
+message Sum {
+    optional int32 sum = 1;
+}
+
+service SumService {
+    rpc ComputeSum (NumList) returns (Sum);
+}

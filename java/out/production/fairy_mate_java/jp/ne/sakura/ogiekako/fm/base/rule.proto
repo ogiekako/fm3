@@ -1,0 +1,20 @@
+option java_package = "jp.ne.sakura.ogiekako.fm.base";
+option java_outer_classname = "Rule";
+
+message Movement {
+    repeated Rider rider = 1;
+    repeated Leaper leaper = 2;
+}
+
+message Rider {
+    optional Vector vector = 1;
+}
+
+message Leaper {
+    optional Vector vector = 1;
+}
+
+message Vector {
+    optional int32 row_delta = 1;
+    optional int32 col_delta = 2;
+}
